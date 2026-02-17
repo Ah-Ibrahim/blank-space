@@ -28,7 +28,7 @@ function NavbarButtons() {
         </div>
       </Unauthenticated>
       <Authenticated>
-        <UserButton showName />
+        <UserButton />
       </Authenticated>
       <AuthLoading>
         <Spinner />
