@@ -1,23 +1,29 @@
 import Image from "next/image";
 
-function Logo({
-  variant,
-  className,
-}: {
-  variant: "light" | "dark";
-  className: string;
-}) {
-  const imageSrc: string =
-    variant === "dark" ? "/notion-icon-dark.png" : "/notion-icon-light.png";
+interface LogoProps {
+  className?: string;
+}
 
+function Logo({ className }: LogoProps) {
   return (
-    <Image
-      src={imageSrc}
-      alt="BlankSpace Logo"
-      className={className}
-      width={100}
-      height={100}
-    />
+    <>
+      <Image
+        src="/notion-icon-light.png"
+        alt="BlankSpace Logo"
+        width={100}
+        height={100}
+        className={`dark:hidden ${className}`}
+      />
+      <div className="bg-foreground">
+        <Image
+          src="/notion-icon-dark.png"
+          alt="BlankSpace Logo"
+          width={100}
+          height={100}
+          className={`hidden dark:block ${className}`}
+        />
+      </div>
+    </>
   );
 }
 export default Logo;

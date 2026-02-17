@@ -6,7 +6,7 @@ function Navbar() {
     <header>
       <nav className="px-8 py-4 flex justify-between">
         <div className="flex items-center gap-x-2">
-          <Logo variant="dark" className="w-8 h-8" />
+          <Logo className="w-8 h-8" />
           BlankSpace
         </div>
         <NavbarButtons />
