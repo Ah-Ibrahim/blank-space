@@ -5,6 +5,7 @@ import screenBreakpoints from "@/lib/breakpoints";
 import { cn } from "@/lib/utils";
 import { ChevronsLeft, MenuIcon } from "lucide-react";
 import { ComponentRef, useEffect, useRef, useState } from "react";
+import { UserItem } from "./user-items";
 
 function Navigation() {
   // hide sidebar on Mobile
@@ -97,15 +98,13 @@ function Navigation() {
         ref={sidebarRef}
       >
         <div
-          className="absolute top-4 right-4"
+          className="text-muted-foreground absolute top-3 right-2 h-6 w-6 rounded-sm opacity-0 transition group-hover/sidebar:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600"
           role="button"
           onClick={collapse}
         >
           <ChevronsLeft className="h-6 w-6" />
         </div>
-        <div>
-          <p>Action</p>
-        </div>
+        <UserItem />
         <div className="mt-4">documents</div>
         <div
           className="h-full opacity-0 group-hover/sidebar:opacity-100 cursor-ew-resize absolute w-1 bg-primary/10 right-0 top-0"
