@@ -8,7 +8,7 @@ async function MainLayout({ children }: { children: React.ReactNode }) {
   if (!userId) redirect("/");
 
   return (
-    <div className="h-full dark:bg-[#1f1f1f] flex">
+    <div className="h-full flex">
       <Navigation />
       <main className="h-full flex-1 overflow-y-auto">{children}</main>
     </div>
