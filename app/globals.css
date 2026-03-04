@@ -52,7 +52,7 @@
 ---break--- */
 :root {
   --radius: 0.625rem;
-  --background: #f8f8f8;
+  --background: #fff;
   --foreground: #1f1f1f;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -88,7 +88,7 @@
 ---break--- */
 .dark {
   --background: #1f1f1f;
-  --foreground: #f8f8f8;
+  --foreground: #fff;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
