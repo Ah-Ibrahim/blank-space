@@ -1,15 +1,34 @@
 "use client";
 
+import { api } from "@/convex/_generated/api";
+import { useSearchStore } from "@/hooks/use-search";
+import { useSettingsStore } from "@/hooks/use-settings";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import screenBreakpoints from "@/lib/breakpoints";
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { useMutation } from "convex/react";
+import {
+  ChevronsLeft,
+  MenuIcon,
+  Plus,
+  PlusCircle,
+  Search,
+  Settings,
+} from "lucide-react";
+import { useParams } from "next/navigation";
 import { ComponentRef, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import DocumentsList from "./documents-list";
+import Item from "./item";
+import Navbar from "./navbar";
+import TrashItem from "./trash-item";
 import { UserItem } from "./user-items";
 
 function Navigation() {
   // hide sidebar on Mobile
   const isMobile = useMediaQuery(`(max-width: ${screenBreakpoints.md})`);
+
+  const params = useParams();
 
   const sidebarRef = useRef<ComponentRef<"aside">>(null);
   const navbarRef = useRef<ComponentRef<"div">>(null);
@@ -17,6 +36,11 @@ function Navigation() {
 
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+  const onOpenSearch = useSearchStore((state) => state.onOpen);
+  const onOpenSettings = useSettingsStore((state) => state.onOpen);
+
+  const create = useMutation(api.documents.create);
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -87,6 +111,17 @@ function Navigation() {
       resetWidth();
     }
   }, [isMobile]);
+
+  const handleCreate = () => {
+    const promise = create({ title: "Untitled" });
+
+    toast.promise(promise, {
+      loading: "Creating Note",
+      success: "Created Note",
+      error: "Error Occurred!",
+    });
+  };
+
   return (
     <>
       <aside
@@ -105,7 +140,16 @@ function Navigation() {
           <ChevronsLeft className="h-6 w-6" />
         </div>
         <UserItem />
-        <div className="mt-4">documents</div>
+        <Item onClick={onOpenSettings} label="Settings" icon={Settings} />
+        <Item onClick={onOpenSearch} isSearch label="Search" icon={Search} />
+        <Item onClick={handleCreate} label="New Page" icon={PlusCircle} />
+        <div className="my-4">
+          <DocumentsList />
+          <Item onClick={handleCreate} label="Add a Page" icon={Plus} />
+          <div className="mt-2">
+            <TrashItem />
+          </div>
+        </div>
         <div
           className="h-full opacity-0 group-hover/sidebar:opacity-100 cursor-ew-resize absolute w-1 bg-primary/10 right-0 top-0"
           onMouseDown={handleMouseDown}
@@ -121,20 +165,24 @@ function Navigation() {
         )}
         ref={navbarRef}
       >
-        <nav
-          className={cn(
-            "w-full bg-transparent px-3 py-2",
-            !isCollapsed && "p-0",
-          )}
-        >
-          {isCollapsed && (
-            <MenuIcon
-              role="button"
-              className="w-6 h-6 text-muted-foreground"
-              onClick={resetWidth}
-            />
-          )}
-        </nav>
+        {Boolean(params.documentId) ? (
+          <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+        ) : (
+          <nav
+            className={cn(
+              "w-full bg-transparent px-3 py-2",
+              !isCollapsed && "p-0",
+            )}
+          >
+            {isCollapsed && (
+              <MenuIcon
+                role="button"
+                className="w-6 h-6 text-muted-foreground"
+                onClick={resetWidth}
+              />
+            )}
+          </nav>
+        )}
       </div>
     </>
   );
