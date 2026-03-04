@@ -48,7 +48,7 @@ export default function RootLayout({
         <ClerkProvider dynamic>
           <ConvexClientProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <Toaster position="bottom-center" />
+              <Toaster position="bottom-center" swipeDirections={["bottom"]} />
               {children}
             </ThemeProvider>
           </ConvexClientProvider>
