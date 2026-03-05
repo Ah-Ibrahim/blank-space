@@ -6,6 +6,7 @@ import { useQuery } from "convex/react";
 import { MenuIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import Banner from "./banner";
+import Menu from "./menu";
 import Title from "./title";
 
 interface NavbarProps {
@@ -22,8 +23,11 @@ function Navbar({ isCollapsed, onResetWidth }: NavbarProps) {
 
   if (document === undefined)
     return (
-      <nav className="bg-background dark:bg-[#1f1f1f] px-3 py-2 w-full flex items-center gap-x-4">
+      <nav className="bg-background dark:bg-[#1f1f1f] px-4 py-3 w-full flex items-center justify-between gap-x-4">
         <Title.Skeleton />
+        <div className="">
+          <Menu.Skeleton />
+        </div>
       </nav>
     );
 
@@ -41,6 +45,7 @@ function Navbar({ isCollapsed, onResetWidth }: NavbarProps) {
         )}
         <div className="flex items-center justify-between w-full">
           <Title initialData={document} />
+          <Menu documentId={documentId as Id<"documents">} />
         </div>
       </nav>
       {Boolean(document.isArchived) && (
