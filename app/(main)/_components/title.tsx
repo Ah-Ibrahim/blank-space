@@ -60,8 +60,7 @@ function Title({ initialData }: TitleProps) {
         <Button
           onClick={enableEditing}
           variant={"ghost"}
-          size={"sm"}
-          className="font-normal h-auto p-1"
+          className="font-normal h-auto py-2 px-3"
         >
           <span className="truncate">{initialData.title}</span>
         </Button>
