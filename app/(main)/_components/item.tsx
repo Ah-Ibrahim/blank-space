@@ -13,6 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/clerk-react";
 import { useMutation } from "convex/react";
 import {
   ChevronDown,
@@ -56,6 +57,7 @@ function Item({
   const create = useMutation(api.documents.create);
   const archive = useMutation(api.documents.archiveDocument);
   const router = useRouter();
+  const { user } = useUser();
 
   const handleExpand = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -153,8 +155,11 @@ function Item({
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuLabel className="text-sm text-muted-foreground">
-                      Last edited by:{" "}
-                      <span className="font-medium text-primary">User</span>
+                      Last edited by
+                      <span className="font-medium text-primary">
+                        {" "}
+                        {user?.fullName}
+                      </span>
                     </DropdownMenuLabel>
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
