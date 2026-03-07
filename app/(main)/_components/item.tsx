@@ -115,7 +115,7 @@ function Item({
           </div>
         )}
         {documentIcon ? (
-          <div className="shrink-0 mr-2 text-[18px]">documentIcon</div>
+          <div className="shrink-0 mr-2 text-[18px]">{documentIcon}</div>
         ) : (
           <Icon className="shrink-0 h-4.5 mr-2 text-muted-foreground" />
         )}
