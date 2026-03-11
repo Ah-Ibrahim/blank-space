@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 import ConvexClientProvider from "@/providers/ConvexClientProvider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -47,10 +48,19 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <ClerkProvider dynamic>
           <ConvexClientProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <Toaster position="bottom-center" swipeDirections={["bottom"]} />
-              {children}
-            </ThemeProvider>
+            <EdgeStoreProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <Toaster
+                  position="bottom-center"
+                  swipeDirections={["bottom"]}
+                />
+                {children}
+              </ThemeProvider>
+            </EdgeStoreProvider>
           </ConvexClientProvider>
         </ClerkProvider>
       </body>
