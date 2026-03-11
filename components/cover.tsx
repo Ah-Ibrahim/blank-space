@@ -12,6 +12,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 import Spinner from "./ui/spinner";
 
 interface CoverProps {
@@ -79,4 +80,9 @@ function Cover({ url, preview }: CoverProps) {
     </div>
   );
 }
+
+export function CoverSkeleton() {
+  return <Skeleton className="w-full h-[20vh]" />;
+}
+
 export default Cover;
