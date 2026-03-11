@@ -1,9 +1,15 @@
+import { Toaster } from "@/components/ui/toaster";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 import ConvexClientProvider from "@/providers/ConvexClientProvider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,14 +45,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.className} antialiased`}>
         <ClerkProvider dynamic>
           <ConvexClientProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
-            </ThemeProvider>
+            <EdgeStoreProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <Toaster
+                  position="bottom-center"
+                  swipeDirections={["bottom"]}
+                />
+                {children}
+              </ThemeProvider>
+            </EdgeStoreProvider>
           </ConvexClientProvider>
         </ClerkProvider>
       </body>

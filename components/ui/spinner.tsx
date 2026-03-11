@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import { LoaderCircle } from "lucide-react";
+import { Loader } from "lucide-react";
 
 const spinnerVariants = cva(
   "text-muted-foreground animate-spin aspect-square",
@@ -22,6 +22,6 @@ const spinnerVariants = cva(
 type SpinnerProps = VariantProps<typeof spinnerVariants>;
 
 function Spinner({ size }: SpinnerProps) {
-  return <LoaderCircle className={cn(spinnerVariants({ size }))} />;
+  return <Loader className={cn(spinnerVariants({ size }))} />;
 }
 export default Spinner;
