@@ -42,6 +42,13 @@ function DocumentTitle({ initialData, isPreview }: DocumentTitleProps) {
     setTitle(initialData.title);
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      textareaRef.current?.blur();
+    }
+  };
+
   return (
     <>
       {isEditing && !isPreview ? (
@@ -50,15 +57,17 @@ function DocumentTitle({ initialData, isPreview }: DocumentTitleProps) {
           value={title}
           onChange={handleChange}
           className={cn(
-            "w-full resize-none overflow-hidden bg-transparent text-[#3f3f3f] dark:text-[#cfcfcf] font-bold focus:outline-none text-5xl cursor-pointer focus:cursor-text",
+            "w-full resize-none overflow-hidden bg-transparent text-[#3f3f3f] dark:text-[#cfcfcf] font-bold focus:outline-none text-5xl cursor-pointer focus:cursor-text leading-[1.2]",
           )}
           spellCheck={false}
           onBlur={disableInput}
+          placeholder="Untitled"
+          onKeyDown={onKeyDown}
         />
       ) : (
         <div
           className={cn(
-            "w-full overflow-hidden break-words whitespace-pre-wrap bg-transparent text-[#3f3f3f] dark:text-[#cfcfcf] font-bold focus:outline-none text-5xl cursor-pointer focus:cursor-text",
+            "w-full overflow-hidden wrap-break-word bg-transparent text-[#3f3f3f] dark:text-[#cfcfcf] font-bold focus:outline-none text-5xl cursor-pointer focus:cursor-text leading-[1.2]",
             isPreview && "cursor-default",
           )}
           onClick={enableInput}
