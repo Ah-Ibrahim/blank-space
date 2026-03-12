@@ -39,7 +39,7 @@ function Banner({ id }: BannerProps) {
   };
 
   return (
-    <div className="bg-rose-400 text-sm p-2 text-white flex items-center gap-x-2 justify-center">
+    <div className="bg-rose-400 text-sm p-2 flex items-center gap-x-2 justify-center">
       <p>This page is in Trash</p>
       <Button variant="outline" size="sm" onClick={handleRestore}>
         Restore
