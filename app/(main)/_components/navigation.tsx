@@ -15,7 +15,7 @@ import {
   Search,
   Settings,
 } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ComponentRef, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import DocumentsList from "./documents-list";
@@ -41,6 +41,8 @@ function Navigation() {
   const onOpenSettings = useSettingsStore((state) => state.onOpen);
 
   const create = useMutation(api.documents.create);
+
+  const router = useRouter();
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -113,7 +115,9 @@ function Navigation() {
   }, [isMobile]);
 
   const handleCreate = () => {
-    const promise = create({ title: "Untitled" });
+    const promise = create({ title: "Untitled" }).then((id) =>
+      router.push(`/documents/${id}`),
+    );
 
     toast.promise(promise, {
       loading: "Creating Note",
