@@ -12,6 +12,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@blocknote/core": "^0.47.1",
+    "@blocknote/react": "^0.47.1",
+    "@blocknote/shadcn": "^0.47.1",
     "@clerk/clerk-react": "^5.60.0",
     "@clerk/nextjs": "^6.37.3",
     "@edgestore/react": "^0.7.0",
