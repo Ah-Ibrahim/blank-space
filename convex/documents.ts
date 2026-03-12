@@ -201,7 +201,7 @@ export const restoreDocument = mutation({
 
     const document = await ctx.db.get("documents", documentId);
 
-    if (document === null) throw new Error("Document not found");
+    if (document === null) return null;
     if (document.userId !== userId)
       throw new Error("Unauthorized access to document");
 
@@ -237,7 +237,7 @@ export const getById = query({
 
     const document = await ctx.db.get("documents", documentId);
 
-    if (document === null) throw new Error("Document not found");
+    if (document === null) return null;
 
     if (!document.isArchived && document.isPublished) return document;
 
