@@ -4,8 +4,10 @@ import Cover from "@/components/cover";
 import Toolbar from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { cn } from "@/lib/utils";
 import { useMutation, useQuery } from "convex/react";
 import dynamic from "next/dynamic";
+import { notFound, useParams } from "next/navigation";
 import Loading from "./loading";
 
 const Editor = dynamic(() => import("@/components/editor"), {
@@ -20,6 +22,9 @@ function DocumentPage() {
   const update = useMutation(api.documents.update);
 
   if (document === undefined) return <Loading />;
+  if (document === null) {
+    return notFound();
+  }
 
   const handleChange = (content: string) => {
     update({ id: documentId as Id<"documents">, content });
