@@ -7,7 +7,9 @@ import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { useMutation, useQuery } from "convex/react";
 import dynamic from "next/dynamic";
-import { notFound, useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "sonner";
 import Loading from "./loading";
 
 const Editor = dynamic(() => import("@/components/editor"), {
@@ -20,11 +22,16 @@ function DocumentPage() {
     documentId: documentId as Id<"documents">,
   });
   const update = useMutation(api.documents.update);
+  const router = useRouter();
 
-  if (document === undefined) return <Loading />;
-  if (document === null) {
-    return notFound();
-  }
+  useEffect(() => {
+    if (document === null) {
+      toast.error("Document not found");
+      router.replace("/documents");
+    }
+  }, [document, router]);
+
+  if (!document) return <Loading />;
 
   const handleChange = (content: string) => {
     update({ id: documentId as Id<"documents">, content });
