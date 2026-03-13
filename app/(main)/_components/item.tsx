@@ -103,6 +103,7 @@ function Item({
         }}
         className={cn(
           "group flex items-center min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 text-muted-foreground font-medium",
+          isActive && "bg-primary/5 text-primary",
         )}
       >
         {Boolean(id) && (
