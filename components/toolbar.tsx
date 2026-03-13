@@ -44,11 +44,11 @@ function Toolbar({ initialData, preview }: ToolbarProps) {
   };
 
   return (
-    <div className="pl-[54px] group relative flex flex-col gap-y-4">
+    <div className="pl-[54px] group relative flex flex-col">
       {Boolean(initialData.icon) && !preview && (
-        <div className="flex items-center gap-x-2 group/icon pt-6">
+        <div className="flex items-center gap-x-2 group/icon pt-6 w-max">
           <IconPicker onChange={onEmojiChange}>
-            <p className="text-6xl hover:opacity-75 transition-opacity ">
+            <p className="text-6xl hover:opacity-75 transition-opacity w-max">
               {initialData.icon}
             </p>
           </IconPicker>
@@ -66,7 +66,7 @@ function Toolbar({ initialData, preview }: ToolbarProps) {
         <p className="text-6xl">{initialData.icon}</p>
       )}
       {!preview && (
-        <div className="opacity-0 group-hover:opacity-100 flex gap-x-2 transition-opacity text-3xl duration-base">
+        <div className="opacity-0 group-hover:opacity-100 flex gap-x-2 transition-opacity text-3xl duration-base mt-4 mb-2">
           {!Boolean(initialData.icon) && (
             <IconPicker onChange={onEmojiChange} asChild>
               <Button
