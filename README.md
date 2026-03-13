@@ -1,51 +1,182 @@
-# Welcome to your Convex + Next.js + Clerk app
+# 🎨 Blankspace (Notion Clone)
 
-This is a [Convex](https://convex.dev/) project created with [`npm create convex`](https://www.npmjs.com/package/create-convex).
+![Next.js](https://img.shields.io/badge/NextJs-000000?logo=nextdotjs)
+![Next.js](https://img.shields.io/badge/Shadcn/UI-000000?logo=shadcnui)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Convex](https://img.shields.io/badge/Convex-444435?logo=convex)
+![Clerk](https://img.shields.io/badge/Clerk-6C47FF?logo=clerk)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38BDF8?logo=tailwindcss&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-After the initial setup (<2 minutes) you'll have a working full-stack app using:
+<p align="center">
+  <img src="./design/Preview.png" width="800" alt="Blankspace App"/>
+</p>
 
-- Convex as your backend (database, server logic)
-- [React](https://react.dev/) as your frontend (web page interactivity)
-- [Next.js](https://nextjs.org/) for optimized web hosting and page routing
-- [Tailwind](https://tailwindcss.com/) for building great looking accessible UI
-- [Clerk](https://clerk.com/) for authentication
+<p align="center">
+  A modern collaborative workspace inspired by Notion.
+</p>
 
-## Get started
+<p align="center">
+  <a href="https://blank-space-tau.vercel.app" style="color: blue"><strong style="color: #FF5154">Live Demo</strong></a> •
+  <a href="#-features"><strong style="color: #D1D646">Features</strong></a> •
+  <a href="#%EF%B8%8F-getting-started"><strong style="color: #C1DBE3">Getting Started</strong></a>
+</p>
 
-If you just cloned this codebase and didn't use `npm create convex`, run:
+---
+
+## 📋 Table of Contents
+
+- [About](#-about)
+- [Tech Stack](#%EF%B8%8F-tech-stack)
+- [Features](#-features)
+- [Getting Started](#%EF%B8%8F-getting-started)
+- [Project Structure](#project-structure)
+- [License](#-license)
+- [Credits](#-credits)
+- [Authors](#%EF%B8%8F-authors)
+
+---
+
+## 👋 About
+
+Blankspace is a productivity workspace designed for writing, organizing, and managing documents in a flexible hierarchical structure.
+
+The goal of this project was to build a **modern full-stack application** with real-time capabilities, authentication, cloud file storage, and a scalable architecture.
+
+The application includes **a rich editing experience, nested documents, trash management, cover images, and a command-palette style search** — all wrapped in a fast and responsive interface.
+
+---
+
+## 🛠️ Tech Stack
+
+### 📱 Frontend
+
+- **Next.js**
+- **TypeScript**
+- **Tailwind CSS**
+- **Shadcn/ui**
+- **Zustand** (state management)
+
+### 💻 Backend
+
+- **Convex** (database + backend logic)
+
+### 🥸 Authentication
+
+- **Clerk**
+
+### 📂 File Storage
+
+- **EdgeStore**
+
+---
+
+## ✨ Features
+
+Some cool stuff this project can do:
+
+### 📝 Document Editor
+
+- Nested documents
+- Cover images
+- Real-time updates
+
+### 🔐 Authentication
+
+- Secure login with Clerk
+- Protected routes
+
+### 📁 File Storage
+
+- Image uploads with EdgeStore
+- Optimized asset delivery
+
+### ⚡ Performance
+
+- Real-time backend with Convex
+- Server components with Next.js
+
+---
+
+## ⚙️ Getting Started
+
+Wanna run this locally? Follow these steps:
+
+1. Clone the repo
+
+```bash
+git clone https://github.com/Ah-Ibrahim/blank-space.git
+cd blank-space
 
 ```
+
+2. Install dependencies
+
+```bash
 npm install
+```
+
+3. Add environment variables
+
+```bash
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/documents
+NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/documents
+CLERK_SECRET_KEY=
+CLERK_JWT_ISSUER_DOMAIN=
+NEXT_PUBLIC_CONVEX_URL=
+CONVEX_DEPLOYMENT=
+EDGE_STORE_ACCESS_KEY=
+EDGE_STORE_SECRET_KEY=
+
+```
+
+4. Start the app
+
+```bash
 npm run dev
 ```
 
-If you're reading this README on GitHub and want to use this template, run:
+---
+
+## Project Structure
 
 ```
-npm create convex@latest -- -t nextjs-clerk
+./
+├── app
+│ ├── (marketing)     # Landing page
+│ └── (main)          # Authenticated app
+│
+├── components
+│ ├── ui              # Shadcn components
+│ ├── modals
+│ └── upload
+│
+├── convex            # Backend functions
+├── hooks             # Custom hooks
+├── lib               # Utilities
+├── providers         # Context providers
+├── public            # Static assets
+└── proxy.ts
 ```
 
-Then:
+---
 
-1. Open your app. There should be a "Claim your application" button from Clerk in the bottom right of your app.
-2. Follow the steps to claim your application and link it to this app.
-3. Follow step 3 in the [Convex Clerk onboarding guide](https://docs.convex.dev/auth/clerk#get-started) to create a Convex JWT template.
-4. Uncomment the Clerk provider in `convex/auth.config.ts`
-5. Paste the Issuer URL as `CLERK_JWT_ISSUER_DOMAIN` to your dev deployment environment variable settings on the Convex dashboard (see [docs](https://docs.convex.dev/auth/clerk#configuring-dev-and-prod-instances))
+## 📄 License
 
-If you want to sync Clerk user data via webhooks, check out this [example repo](https://github.com/thomasballinger/convex-clerk-users-table/).
+This project is licensed under the MIT License.
+Feel free to do what you want with it.
 
-## Learn more
+---
 
-To learn more about developing your project with Convex, check out:
+## 🙏 Credits
 
-- The [Tour of Convex](https://docs.convex.dev/get-started) for a thorough introduction to Convex principles.
-- The rest of [Convex docs](https://docs.convex.dev/) to learn about all Convex features.
-- [Stack](https://stack.convex.dev/) for in-depth articles on advanced topics.
+Big thanks to:
 
-## Join the community
+- [Lucide](https://lucide.dev/) for icons
 
-Join thousands of developers building full-stack apps with Convex:
+---
 
-- Join the [Convex Discord community](https://convex.dev/community) to get help in real-time.
-- Follow [Convex on GitHub](https://github.com/get-convex/), star and contribute to the open-source implementation of Convex.
+## ✍️ Authors
+
+Ahmed Ibrahim

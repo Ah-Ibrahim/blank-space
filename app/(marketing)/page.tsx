@@ -7,7 +7,7 @@ function LandingPage() {
     <section>
       <div className="md:w-2/3 flex flex-col items-center space-y-6 mt-30 mx-auto px-4">
         <Heading />
-        <p className="text-center font-bold md:text-xl xs:w-sm">
+        <p className="text-center font-bold md:text-xl w-full xs:w-xs  md:w-md">
           BlankSpace is the connected workspace where better, faster work
           happens.
         </p>
@@ -35,7 +35,6 @@ function LandingPage() {
             width={2000}
             height={2000}
             className="w-md hidden dark:block"
-            loading="eager"
           />
           <Image
             src="/hero-dark-2.png"
@@ -43,7 +42,6 @@ function LandingPage() {
             width={2000}
             height={2000}
             className="w-md hidden dark:block"
-            loading="eager"
           />
         </figure>
       </div>
