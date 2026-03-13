@@ -1,9 +1,9 @@
 "use client";
 
+import { deleteImgFromEdgeStore } from "@/app/actions/deleteImg";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useCoverImage } from "@/hooks/use-cover-image";
-import { useEdgeStore } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
 import { useMutation } from "convex/react";
 import { ImageOffIcon, Pen } from "lucide-react";
@@ -24,7 +24,6 @@ function Cover({ url, preview }: CoverProps) {
   const onReplaceUrl = useCoverImage((state) => state.onReplaceUrl);
   const { documentId } = useParams();
   const removeCoverImage = useMutation(api.documents.removeCoverImage);
-  const { edgestore } = useEdgeStore();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleRemoveCover = () => {
@@ -32,11 +31,9 @@ function Cover({ url, preview }: CoverProps) {
 
     setIsSubmitting(true);
 
-    const promise = edgestore.publicFiles.delete({ url }).then(() =>
-      removeCoverImage({
-        id: documentId as Id<"documents">,
-      }),
-    );
+    const promise = deleteImgFromEdgeStore(url).then(() => {
+      removeCoverImage({ id: documentId as Id<"documents"> });
+    });
 
     promise.finally(() => {
       setIsSubmitting(false);

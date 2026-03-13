@@ -1,17 +1,10 @@
-import { initEdgeStore } from "@edgestore/server";
+import { edgeStoreRouter } from "@/lib/edgestore-server";
 import { createEdgeStoreNextHandler } from "@edgestore/server/adapters/next/app";
 import { initEdgeStoreClient } from "@edgestore/server/core";
-
-const es = initEdgeStore.create();
 
 /**
  * This is the main router for the EdgeStore buckets.
  */
-const edgeStoreRouter = es.router({
-  publicFiles: es.fileBucket().beforeDelete(() => {
-    return true;
-  }),
-});
 
 const handler = createEdgeStoreNextHandler({
   router: edgeStoreRouter,

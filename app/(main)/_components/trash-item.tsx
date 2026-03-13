@@ -63,11 +63,15 @@ function TrashItem() {
   const handleEmptyTrash = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    archivedDocuments?.forEach(async (doc) => {
-      if (doc.coverImg) await deleteImgFromEdgeStore(doc.coverImg);
-    });
+    if (!archivedDocuments?.length) return;
 
-    const isCurrentDocumentDeleted = archivedDocuments?.some(
+    const imagesToDelete = archivedDocuments
+      .filter((doc) => doc.coverImg !== undefined)
+      .map((doc) => deleteImgFromEdgeStore(doc.coverImg!));
+
+    await Promise.all(imagesToDelete);
+
+    const isCurrentDocumentDeleted = archivedDocuments.some(
       (doc) => doc._id == params.documentId,
     );
 
