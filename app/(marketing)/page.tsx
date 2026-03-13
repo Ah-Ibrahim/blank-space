@@ -12,12 +12,38 @@ function LandingPage() {
           happens.
         </p>
         <HeroButton />
-        <figure>
+        <figure className="flex">
           <Image
-            src="/hero-image.jpg"
+            src="/hero-light.png"
             alt="Hero Image"
-            width={1500}
-            height={600}
+            width={2000}
+            height={2000}
+            className="w-md dark:hidden"
+            loading="eager"
+          />
+          <Image
+            src="/hero-light-2.png"
+            alt="Hero Image"
+            width={2000}
+            height={2000}
+            className="w-md dark:hidden"
+            loading="eager"
+          />
+          <Image
+            src="/hero-dark.png"
+            alt="Hero Image"
+            width={2000}
+            height={2000}
+            className="w-md hidden dark:block"
+            loading="eager"
+          />
+          <Image
+            src="/hero-dark-2.png"
+            alt="Hero Image"
+            width={2000}
+            height={2000}
+            className="w-md hidden dark:block"
+            loading="eager"
           />
         </figure>
       </div>
