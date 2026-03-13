@@ -56,7 +56,7 @@ function Cover({ url, preview }: CoverProps) {
     >
       {url && <Image src={url} fill alt="cover" />}
       {url && !preview && (
-        <div className="opacity-100 group-hover:opacity-100 absolute bottom-5 right-5 flex items-center gap-x-2">
+        <div className="opacity-100 group-hover:opacity-100 absolute bottom-5 right-5 flex items-center gap-x-2 z-10">
           <Button
             onClick={() => onReplaceUrl(url)}
             variant="outline"
