@@ -1,13 +1,16 @@
 "use client";
 
 import Cover from "@/components/cover";
-import Editor from "@/components/editor";
 import Toolbar from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
-import { useParams } from "next/navigation";
+import dynamic from "next/dynamic";
 import Loading from "./loading";
+
+const Editor = dynamic(() => import("@/components/editor"), {
+  ssr: false,
+});
 
 function DocumentPage() {
   const { documentId } = useParams();
