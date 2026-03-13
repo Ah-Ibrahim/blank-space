@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteImgFromEdgeStore } from "@/app/actions/deleteImg";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +15,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import { Reply, Search, Trash, Trash2, Wind } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import Item from "./item";
 
@@ -27,6 +28,8 @@ function TrashItem() {
   const deleteArchivedDocuments = useMutation(
     api.documents.deleteArchivedDocuments,
   );
+
+  const params = useParams();
 
   const router = useRouter();
 
@@ -45,11 +48,33 @@ function TrashItem() {
   };
 
   const handleDelete = (documentId: Id<"documents">) => {
+    console.log(documentId);
+    console.log(params.documentId);
+
+    if (documentId == params.documentId) {
+      console.log("yes");
+      router.replace("/documents");
+    }
+
+    deleteImgFromEdgeStore(documentId);
     deleteDocument({ documentId });
   };
 
   const handleEmptyTrash = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+
+    archivedDocuments?.forEach(async (doc) => {
+      if (doc.coverImg) await deleteImgFromEdgeStore(doc.coverImg);
+    });
+
+    const isCurrentDocumentDeleted = archivedDocuments?.some(
+      (doc) => doc._id == params.documentId,
+    );
+
+    if (isCurrentDocumentDeleted) {
+      router.replace("/documents");
+    }
+
     await deleteArchivedDocuments();
   };
 
