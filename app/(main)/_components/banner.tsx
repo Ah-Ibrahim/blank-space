@@ -28,7 +28,7 @@ function Banner({ id }: BannerProps) {
   };
 
   const handleDelete = () => {
-    router.push("/documents");
+    router.replace("/documents");
     const promise = deleteDocument({ documentId: id });
 
     toast.promise(promise, {
