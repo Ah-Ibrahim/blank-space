@@ -163,7 +163,7 @@ function Navigation() {
       </aside>
       <div
         className={cn(
-          "absolute top-0 left-60 w-[calc(100%-240px)] z-9999",
+          "absolute top-0 left-60 w-[calc(100%-240px)] z-9999 overflow-hidden",
           isResetting && "transition-[width] ease-in-out duration-100",
           isMobile && "left-0 w-full",
         )}
