@@ -1,3 +1,4 @@
+import AuthGate from "@/providers/auth-gate";
 import ModalProvider from "@/providers/modal-provider";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
@@ -10,13 +11,15 @@ async function MainLayout({ children }: { children: React.ReactNode }) {
   if (!userId) redirect("/");
 
   return (
-    <ModalProvider>
-      <div className="h-full flex">
-        <Navigation />
-        <SearchCommand />
-        <main className="h-full flex-1 overflow-y-auto">{children}</main>
-      </div>
-    </ModalProvider>
+    <AuthGate>
+      <ModalProvider>
+        <div className="h-full flex">
+          <Navigation />
+          <SearchCommand />
+          <main className="h-full flex-1 overflow-y-auto">{children}</main>
+        </div>
+      </ModalProvider>
+    </AuthGate>
   );
 }
 export default MainLayout;

@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import * as React from "react";
 import { useDropzone, type DropzoneOptions } from "react-dropzone";
-import { ProgressCircle } from "./progress-circle";
+import Spinner from "../ui/spinner";
 import { formatFileSize, useUploader } from "./uploader-provider";
 
 const DROPZONE_VARIANTS = {
@@ -201,7 +201,7 @@ const SingleImageDropzone = React.forwardRef<
         {/* Upload progress overlay */}
         {displayUrl && fileState?.status === "UPLOADING" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center rounded-md bg-black/70">
-            <ProgressCircle progress={fileState.progress} />
+            <Spinner size="lg" />
           </div>
         )}
 

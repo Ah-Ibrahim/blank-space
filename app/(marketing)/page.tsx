@@ -12,13 +12,13 @@ function LandingPage() {
           happens.
         </p>
         <HeroButton />
-        <figure className="flex">
+        <figure className="flex max-md:flex-col">
           <Image
             src="/hero-light.png"
             alt="Hero Image"
             width={2000}
             height={2000}
-            className="w-md dark:hidden"
+            className="dark:hidden w-2xs xl:w-md"
             loading="eager"
           />
           <Image
@@ -26,7 +26,7 @@ function LandingPage() {
             alt="Hero Image"
             width={2000}
             height={2000}
-            className="w-md dark:hidden"
+            className="dark:hidden w-2xs xl:w-md"
             loading="eager"
           />
           <Image
@@ -34,14 +34,14 @@ function LandingPage() {
             alt="Hero Image"
             width={2000}
             height={2000}
-            className="w-md hidden dark:block"
+            className="hidden dark:block w-2xs xl:w-md"
           />
           <Image
             src="/hero-dark-2.png"
             alt="Hero Image"
             width={2000}
             height={2000}
-            className="w-md hidden dark:block"
+            className="hidden dark:block w-2xs xl:w-md"
           />
         </figure>
       </div>

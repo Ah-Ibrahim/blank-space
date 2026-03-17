@@ -106,6 +106,12 @@ function Navigation() {
     }
   };
 
+  const closeNavOnMobile = () => {
+    if (isMobile) {
+      collapse();
+    }
+  };
+
   useEffect(() => {
     if (isMobile) {
       collapse();
@@ -118,6 +124,8 @@ function Navigation() {
     const promise = create({ title: "Untitled" }).then((id) =>
       router.push(`/documents/${id}`),
     );
+
+    closeNavOnMobile();
 
     toast.promise(promise, {
       loading: "Creating Note",
@@ -137,7 +145,10 @@ function Navigation() {
         ref={sidebarRef}
       >
         <div
-          className="text-muted-foreground absolute top-3 right-2 h-6 w-6 rounded-sm opacity-0 transition group-hover/sidebar:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600"
+          className={cn(
+            "text-muted-foreground absolute top-3 right-2 h-6 w-6 rounded-sm opacity-0 transition group-hover/sidebar:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600",
+            isMobile && "opacity-100",
+          )}
           role="button"
           onClick={collapse}
         >
@@ -148,7 +159,7 @@ function Navigation() {
         <Item onClick={onOpenSearch} isSearch label="Search" icon={Search} />
         <Item onClick={handleCreate} label="New Page" icon={PlusCircle} />
         <div className="my-4">
-          <DocumentsList />
+          <DocumentsList onItemClick={closeNavOnMobile} />
           <Item onClick={handleCreate} label="Add a Page" icon={Plus} />
           <div className="mt-2">
             <TrashItem />
@@ -163,7 +174,7 @@ function Navigation() {
       </aside>
       <div
         className={cn(
-          "absolute top-0 left-60 w-[calc(100%-240px)] z-9999",
+          "absolute top-0 left-60 w-[calc(100%-240px)] z-9999 overflow-hidden",
           isResetting && "transition-[width] ease-in-out duration-100",
           isMobile && "left-0 w-full",
         )}

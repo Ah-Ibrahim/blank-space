@@ -11,9 +11,14 @@ import Item from "./item";
 interface DocumentListProps {
   parentDocumentId?: Id<"documents">;
   level?: number;
+  onItemClick: () => void;
 }
 
-function DocumentsList({ parentDocumentId, level = 0 }: DocumentListProps) {
+function DocumentsList({
+  parentDocumentId,
+  level = 0,
+  onItemClick,
+}: DocumentListProps) {
   const params = useParams();
   const router = useRouter();
   const [expandedItems, setExpandedItems] = useState<
@@ -57,6 +62,7 @@ function DocumentsList({ parentDocumentId, level = 0 }: DocumentListProps) {
       isExpanded={expandedItems[document._id]}
       documentIcon={document.icon}
       isActive={params.documentId === document._id}
+      onCloseMenu={onItemClick}
     />
   ));
 

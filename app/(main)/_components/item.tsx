@@ -39,6 +39,7 @@ interface ItemProps {
   isActive?: boolean;
   isSearch?: boolean;
   onExpand?: () => void;
+  onCloseMenu?: () => void;
 }
 
 function Item({
@@ -52,6 +53,7 @@ function Item({
   isActive,
   isSearch,
   onExpand,
+  onCloseMenu = () => {},
 }: ItemProps) {
   const ChevronIcon = isExpanded ? ChevronDown : ChevronRight;
   const create = useMutation(api.documents.create);
@@ -93,11 +95,16 @@ function Item({
     });
   };
 
+  const handleClick = () => {
+    onClick?.();
+    onCloseMenu();
+  };
+
   return (
     <div>
       <button
         role="button"
-        onClick={onClick}
+        onClick={handleClick}
         style={{
           paddingLeft: `${level * 12 + 12}px`,
         }}
@@ -175,7 +182,13 @@ function Item({
           </div>
         )}
       </button>
-      {isExpanded && <DocumentsList parentDocumentId={id} level={level + 1} />}
+      {isExpanded && (
+        <DocumentsList
+          parentDocumentId={id}
+          level={level + 1}
+          onItemClick={onCloseMenu}
+        />
+      )}
     </div>
   );
 }

@@ -16,9 +16,8 @@ function NavbarButtons() {
               Log in
             </Button>
           </SignInButton>
-
           <SignUpButton mode="modal">
-            <Button>
+            <Button className="hidden xs:flex">
               Get BlankSpace <ArrowRightIcon />
             </Button>
           </SignUpButton>

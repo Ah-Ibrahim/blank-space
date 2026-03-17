@@ -21,7 +21,7 @@ export const UserItem = () => {
           role="button"
           className="hover:bg-primary/5 flex w-full items-center p-3 text-sm"
         >
-          <div className="flex max-w-39 items-center gap-x-2">
+          <div className="flex items-center gap-x-2">
             <Avatar className="h-5 w-5">
               <AvatarImage src={user?.imageUrl} />
             </Avatar>
@@ -29,7 +29,7 @@ export const UserItem = () => {
               {user?.fullName}&apos;s BlankSpace
             </span>
           </div>
-          <ChevronsLeftRight className="text-muted-foreground ml-2 h-4 w-4 rotate-90" />
+          <ChevronsLeftRight className="text-muted-foreground ml-2 mr-6 h-4 w-4 rotate-90" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
