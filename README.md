@@ -13,7 +13,7 @@
 </p>
 <details open>
 <summary>Demo</summary>
-  <p align="center"><img src="./design/Preview-3.gif" width="600" alt="Blankspace App"/></p>
+  <p align="center"><img src="./design/Blankspace.gif" width="600" alt="Blankspace App"/></p>
 
 </details>
 
