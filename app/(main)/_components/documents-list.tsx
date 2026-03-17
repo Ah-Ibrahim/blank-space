@@ -52,10 +52,7 @@ function DocumentsList({
 
   const documentsItems = documents.map((document) => (
     <Item
-      onClick={() => {
-        handleRedirect(document._id);
-        onItemClick();
-      }}
+      onClick={handleRedirect.bind(null, document._id)}
       documentId={document._id}
       key={document._id}
       onExpand={handleExpand.bind(null, document._id)}
@@ -65,6 +62,7 @@ function DocumentsList({
       isExpanded={expandedItems[document._id]}
       documentIcon={document.icon}
       isActive={params.documentId === document._id}
+      onCloseMenu={onItemClick}
     />
   ));
 
