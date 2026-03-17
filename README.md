@@ -9,15 +9,20 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 <p align="center">
-  <img src="./design/Preview.png" width="800" alt="Blankspace App"/>
+  <img src="./design/Preview.png" width="600" alt="Blankspace App"/>
 </p>
+<details open>
+<summary>Demo</summary>
+  <p align="center"><img src="./design/Preview-3.gif" width="600" alt="Blankspace App"/></p>
+
+</details>
 
 <p align="center">
   A modern collaborative workspace inspired by Notion.
 </p>
 
 <p align="center">
-  <a href="https://blank-space-tau.vercel.app" style="color: blue"><strong style="color: #FF5154">Live Demo</strong></a> •
+  <a href="https://blank-space-tau.vercel.app" style="color: blue"><strong style="color: #FF5154">Live Preview</strong></a> •
   <a href="#-features"><strong style="color: #D1D646">Features</strong></a> •
   <a href="#%EF%B8%8F-getting-started"><strong style="color: #C1DBE3">Getting Started</strong></a>
 </p>
