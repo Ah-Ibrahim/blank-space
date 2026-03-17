@@ -106,6 +106,12 @@ function Navigation() {
     }
   };
 
+  const closeNavOnMobile = () => {
+    if (isMobile) {
+      collapse();
+    }
+  };
+
   useEffect(() => {
     if (isMobile) {
       collapse();
@@ -118,6 +124,8 @@ function Navigation() {
     const promise = create({ title: "Untitled" }).then((id) =>
       router.push(`/documents/${id}`),
     );
+
+    closeNavOnMobile();
 
     toast.promise(promise, {
       loading: "Creating Note",
@@ -151,7 +159,7 @@ function Navigation() {
         <Item onClick={onOpenSearch} isSearch label="Search" icon={Search} />
         <Item onClick={handleCreate} label="New Page" icon={PlusCircle} />
         <div className="my-4">
-          <DocumentsList />
+          <DocumentsList onItemClick={closeNavOnMobile} />
           <Item onClick={handleCreate} label="Add a Page" icon={Plus} />
           <div className="mt-2">
             <TrashItem />

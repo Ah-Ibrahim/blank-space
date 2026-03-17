@@ -11,9 +11,14 @@ import Item from "./item";
 interface DocumentListProps {
   parentDocumentId?: Id<"documents">;
   level?: number;
+  onItemClick: () => void;
 }
 
-function DocumentsList({ parentDocumentId, level = 0 }: DocumentListProps) {
+function DocumentsList({
+  parentDocumentId,
+  level = 0,
+  onItemClick,
+}: DocumentListProps) {
   const params = useParams();
   const router = useRouter();
   const [expandedItems, setExpandedItems] = useState<
@@ -47,7 +52,10 @@ function DocumentsList({ parentDocumentId, level = 0 }: DocumentListProps) {
 
   const documentsItems = documents.map((document) => (
     <Item
-      onClick={handleRedirect.bind(null, document._id)}
+      onClick={() => {
+        handleRedirect(document._id);
+        onItemClick();
+      }}
       documentId={document._id}
       key={document._id}
       onExpand={handleExpand.bind(null, document._id)}
