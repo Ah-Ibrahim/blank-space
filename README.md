@@ -9,7 +9,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 <p align="center">
-  <img src="./design/Preview-2.gif" width="400" alt="Blankspace App"/>
+  <img src="./design/Preview-3.gif" width="600" alt="Blankspace App"/>
 </p>
 
 <p align="center">
