@@ -137,7 +137,10 @@ function Navigation() {
         ref={sidebarRef}
       >
         <div
-          className="text-muted-foreground absolute top-3 right-2 h-6 w-6 rounded-sm opacity-0 transition group-hover/sidebar:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600"
+          className={cn(
+            "text-muted-foreground absolute top-3 right-2 h-6 w-6 rounded-sm opacity-0 transition group-hover/sidebar:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600",
+            isMobile && "opacity-100",
+          )}
           role="button"
           onClick={collapse}
         >
