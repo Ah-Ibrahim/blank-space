@@ -11,15 +11,15 @@ async function MainLayout({ children }: { children: React.ReactNode }) {
   if (!userId) redirect("/");
 
   return (
-    <ModalProvider>
-      <AuthGate>
+    <AuthGate>
+      <ModalProvider>
         <div className="h-full flex">
           <Navigation />
           <SearchCommand />
           <main className="h-full flex-1 overflow-y-auto">{children}</main>
         </div>
-      </AuthGate>
-    </ModalProvider>
+      </ModalProvider>
+    </AuthGate>
   );
 }
 export default MainLayout;
