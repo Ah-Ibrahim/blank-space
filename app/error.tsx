@@ -23,7 +23,7 @@ function ErrorPage({ error, reset }: ErrorPageProps) {
     <div className="flex flex-col items-center h-screen justify-center gap-4">
       <h1 className="font-bold text-2xl md:text-3xl">Something went wrong!</h1>
       <Image
-        src="/error.png"
+        src="/error.webp"
         alt="Error image"
         width={2000}
         height={2000}
