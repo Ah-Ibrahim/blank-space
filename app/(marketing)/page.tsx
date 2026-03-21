@@ -14,7 +14,7 @@ function LandingPage() {
         <HeroButton />
         <figure className="flex max-md:flex-col">
           <Image
-            src="/hero-light.png"
+            src="/hero-light.webp"
             alt="Hero Image"
             width={2000}
             height={2000}
@@ -22,7 +22,7 @@ function LandingPage() {
             loading="eager"
           />
           <Image
-            src="/hero-light-2.png"
+            src="/hero-light-2.webp"
             alt="Hero Image"
             width={2000}
             height={2000}
@@ -30,14 +30,14 @@ function LandingPage() {
             loading="eager"
           />
           <Image
-            src="/hero-dark.png"
+            src="/hero-dark.webp"
             alt="Hero Image"
             width={2000}
             height={2000}
             className="hidden dark:block w-2xs xl:w-md"
           />
           <Image
-            src="/hero-dark-2.png"
+            src="/hero-dark-2.webp"
             alt="Hero Image"
             width={2000}
             height={2000}

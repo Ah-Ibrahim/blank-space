@@ -8,7 +8,7 @@ function Navbar() {
       <nav className="px-8 py-4 flex justify-between">
         <div className="flex items-center gap-x-2 text-xl">
           <Image
-            src="/logo.png"
+            src="/logo.webp"
             alt="logo"
             width={217}
             height={217}
