@@ -7,6 +7,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { DOCUMENT_MESSAGES } from "../(routes)/messages";
 
 interface BannerProps {
   id: Id<"documents">;
@@ -20,22 +21,14 @@ function Banner({ id }: BannerProps) {
   const handleRestore = () => {
     const promise = restore({ documentId: id });
 
-    toast.promise(promise, {
-      loading: "Restoring document...",
-      success: "Document restored successfully",
-      error: "Failed to restore document",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.page.restore);
   };
 
   const handleDelete = () => {
     router.replace("/documents");
     const promise = deleteDocument({ documentId: id });
 
-    toast.promise(promise, {
-      loading: "Deleting document...",
-      success: "Document deleted successfully",
-      error: "Failed to delete document",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.page.delete);
   };
 
   return (

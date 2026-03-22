@@ -1,5 +1,6 @@
 "use client";
 
+import { DOCUMENT_MESSAGES } from "@/app/(main)/(routes)/messages";
 import DocumentTitle from "@/app/(main)/_components/document-title";
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
@@ -26,21 +27,13 @@ function Toolbar({ initialData, preview }: ToolbarProps) {
       icon: emoji,
     });
 
-    toast.promise(promise, {
-      loading: "Updating icon...",
-      success: "Icon updated!",
-      error: "Failed to update icon",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.icon.update);
   };
 
   const onRemoveIcon = () => {
     const promise = removeIcon({ id: initialData._id });
 
-    toast.promise(promise, {
-      loading: "Removing icon...",
-      success: "Icon removed!",
-      error: "Failed to remove icon",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.icon.remove);
   };
 
   return (

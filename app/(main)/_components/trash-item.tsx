@@ -17,6 +17,8 @@ import { useMutation, useQuery } from "convex/react";
 import { Reply, Search, Trash, Trash2, Wind } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
+import { DOCUMENT_MESSAGES } from "../(routes)/messages";
 import Item from "./item";
 
 function TrashItem() {
@@ -44,7 +46,9 @@ function TrashItem() {
   );
 
   const handleRestore = (documentId: Id<"documents">) => {
-    restoreDocument({ documentId });
+    const promise = restoreDocument({ documentId });
+
+    toast.promise(promise, DOCUMENT_MESSAGES.page.restore);
   };
 
   const handleDelete = (documentId: Id<"documents">) => {
@@ -57,7 +61,9 @@ function TrashItem() {
     }
 
     deleteImgFromEdgeStore(documentId);
-    deleteDocument({ documentId });
+    const promise = deleteDocument({ documentId });
+
+    toast.promise(promise, DOCUMENT_MESSAGES.trash.delete);
   };
 
   const handleEmptyTrash = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,7 +85,8 @@ function TrashItem() {
       router.replace("/documents");
     }
 
-    await deleteArchivedDocuments();
+    const promise = deleteArchivedDocuments();
+    toast.promise(promise, DOCUMENT_MESSAGES.trash.empty);
   };
 
   const handleRedirect = (documentId: Id<"documents">) => {

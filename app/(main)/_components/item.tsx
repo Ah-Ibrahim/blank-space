@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
@@ -26,6 +25,7 @@ import {
 import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
 import { toast } from "sonner";
+import { DOCUMENT_MESSAGES } from "../(routes)/messages";
 import DocumentsList from "./documents-list";
 
 interface ItemProps {
@@ -77,22 +77,14 @@ function Item({
       },
     );
 
-    toast.promise(promise, {
-      loading: "Creating Note",
-      success: "Created Note",
-      error: "Error Occurred!",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.page.create);
   };
 
   const handleArchive = () => {
     if (!id) return;
     const promise = archive({ documentId: id });
 
-    toast.promise(promise, {
-      loading: "Archiving Note...",
-      success: "Note Archived!",
-      error: "Error Occurred!",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.page.archive);
   };
 
   const handleClick = () => {
@@ -193,18 +185,6 @@ function Item({
   );
 }
 
-Item.Skeleton = function ItemSkeleton({ level = 0 }: { level?: number }) {
-  return (
-    <div
-      style={{
-        paddingLeft: `${level ? level * 12 + 25 : 12}px`,
-      }}
-      className="flex gap-x-2 py-0.75 pr-3"
-    >
-      <Skeleton className="h-4 w-4 bg-muted-foreground/10" />
-      <Skeleton className="h-4 w-[60%] bg-muted-foreground/10" />
-    </div>
-  );
-};
+Item.Skeleton = function ItemSkeleton({ level = 0 }: { level?: number }) {};
 
 export default Item;
