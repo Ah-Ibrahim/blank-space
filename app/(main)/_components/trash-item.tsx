@@ -96,6 +96,8 @@ function TrashItem() {
     const promise = deleteArchivedDocuments();
     toast.promise(promise, DOCUMENT_MESSAGES.trash.empty);
 
+    await promise;
+
     setIsDeleting(false);
   };
 
