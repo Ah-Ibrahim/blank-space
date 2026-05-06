@@ -1,6 +1,7 @@
 "use client";
 
 import Cover from "@/components/cover";
+import DynamicEditor from "@/components/dynamic-editor";
 import Toolbar from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
@@ -10,9 +11,6 @@ import dynamic from "next/dynamic";
 import { notFound, useParams } from "next/navigation";
 import Loading from "./loading";
 
-const Editor = dynamic(() => import("@/components/editor"), {
-  ssr: false,
-});
 
 function DocumentPage() {
   const { documentId } = useParams();
@@ -43,7 +41,7 @@ function DocumentPage() {
         )}
       >
         <Toolbar initialData={document} />
-        <Editor
+        <DynamicEditor
           onChange={handleChange}
           editable
           initialContent={initialContent}
