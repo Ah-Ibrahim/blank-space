@@ -1,43 +1,9 @@
 import { v } from "convex/values";
 
-import {
-  customCtx,
-  customMutation,
-} from "convex-helpers/server/customFunctions";
-import { Triggers } from "convex-helpers/server/triggers";
-import { DataModel } from "./_generated/dataModel";
-import { query } from "./_generated/server";
-
-import {
-  internalMutation as rawInternalMutation,
-  mutation as rawMutation,
-} from "./_generated/server";
+import { Id } from "./_generated/dataModel";
+import { mutation, query } from "./_generated/server";
 
 // Trigger for deleting children
-
-const triggers = new Triggers<DataModel>();
-
-triggers.register("documents", async (ctx, change) => {
-  const documentId = change.id;
-  const userId = change.oldDoc?.userId ?? "";
-
-  if (change.operation === "delete") {
-    for await (const document of ctx.db
-      .query("documents")
-      .withIndex("by_user_parent", (q) =>
-        q.eq("userId", userId).eq("parentDocument", documentId),
-      )) {
-      await ctx.db.delete("documents", document._id);
-    }
-  }
-});
-
-export const mutation = customMutation(rawMutation, customCtx(triggers.wrapDB));
-export const internalMutation = customMutation(
-  rawInternalMutation,
-  customCtx(triggers.wrapDB),
-);
-
 export const create = mutation({
   args: {
     title: v.string(),
@@ -116,6 +82,30 @@ export const archiveDocument = mutation({
 
     if (document.userId !== userId)
       throw new Error("Unauthorized access to document");
+
+    /**
+     * Recursively archives all descendant documents and detaches them
+     * from their parent relationships to allow independent restoration.
+     */
+
+    const recursiveChildrenArchive = async (documentId: Id<"documents">) => {
+      const childDocuments = await ctx.db
+        .query("documents")
+        .withIndex("by_user_parent", (q) =>
+          q.eq("userId", userId).eq("parentDocument", documentId),
+        )
+        .collect();
+
+      for (const childDocument of childDocuments) {
+        await ctx.db.patch("documents", childDocument._id, {
+          isArchived: true,
+          parentDocument: undefined,
+        });
+        await recursiveChildrenArchive(childDocument._id);
+      }
+    };
+
+    await recursiveChildrenArchive(documentId);
 
     await ctx.db.patch("documents", documentId, { isArchived: true });
   },
