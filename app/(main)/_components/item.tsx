@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
@@ -185,6 +186,17 @@ function Item({
   );
 }
 
-Item.Skeleton = function ItemSkeleton({ level = 0 }: { level?: number }) {};
-
+Item.Skeleton = function ItemSkeleton({ level = 0 }: { level?: number }) {
+  return (
+    <div
+      style={{
+        paddingLeft: `${level ? level * 12 + 25 : 12}px`,
+      }}
+      className="flex gap-x-2 py-0.75 pr-3"
+    >
+      <Skeleton className="h-4 w-4 bg-muted-foreground/10" />
+      <Skeleton className="h-4 w-[60%] bg-muted-foreground/10" />
+    </div>
+  );
+};
 export default Item;
