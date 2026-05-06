@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { useDocumentStore } from "@/hooks/use-document-state";
 import { useMutation, useQuery } from "convex/react";
 import { Reply, Search, Trash, Trash2, Wind } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -22,6 +23,7 @@ import { DOCUMENT_MESSAGES } from "../(routes)/messages";
 import Item from "./item";
 
 function TrashItem() {
+  const setIsDeleting = useDocumentStore((state) => state.setIsDeleting);
   const [search, setSearch] = useState<string>("");
 
   const archivedDocuments = useQuery(api.documents.getArchivedDocuments);
@@ -51,19 +53,23 @@ function TrashItem() {
     toast.promise(promise, DOCUMENT_MESSAGES.page.restore);
   };
 
-  const handleDelete = (documentId: Id<"documents">) => {
-    console.log(documentId);
-    console.log(params.documentId);
+  const handleDelete = async (documentId: Id<"documents">) => {
+    setIsDeleting(true);
 
     if (documentId == params.documentId) {
-      console.log("yes");
       router.replace("/documents");
     }
 
-    deleteImgFromEdgeStore(documentId);
-    const promise = deleteDocument({ documentId });
+    const promise = Promise.all([
+      deleteDocument({ documentId }),
+      deleteImgFromEdgeStore(documentId),
+    ]);
 
     toast.promise(promise, DOCUMENT_MESSAGES.trash.delete);
+
+    await promise;
+
+    setIsDeleting(false);
   };
 
   const handleEmptyTrash = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,11 +77,7 @@ function TrashItem() {
 
     if (!archivedDocuments?.length) return;
 
-    const imagesToDelete = archivedDocuments
-      .filter((doc) => doc.coverImg !== undefined)
-      .map((doc) => deleteImgFromEdgeStore(doc.coverImg!));
-
-    await Promise.all(imagesToDelete);
+    setIsDeleting(true);
 
     const isCurrentDocumentDeleted = archivedDocuments.some(
       (doc) => doc._id == params.documentId,
@@ -85,8 +87,16 @@ function TrashItem() {
       router.replace("/documents");
     }
 
+    const imagesToDelete = archivedDocuments
+      .filter((doc) => doc.coverImg !== undefined)
+      .map((doc) => deleteImgFromEdgeStore(doc.coverImg!));
+
+    await Promise.all(imagesToDelete);
+
     const promise = deleteArchivedDocuments();
     toast.promise(promise, DOCUMENT_MESSAGES.trash.empty);
+
+    setIsDeleting(false);
   };
 
   const handleRedirect = (documentId: Id<"documents">) => {

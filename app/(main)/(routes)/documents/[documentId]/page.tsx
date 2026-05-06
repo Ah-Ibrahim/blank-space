@@ -5,22 +5,26 @@ import DynamicEditor from "@/components/dynamic-editor";
 import Toolbar from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { useDocumentStore } from "@/hooks/use-document-state";
 import { cn } from "@/lib/utils";
 import { useMutation, useQuery } from "convex/react";
-import dynamic from "next/dynamic";
-import { notFound, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import Loading from "./loading";
-
+import DocumentNotFound from "./not-found";
 
 function DocumentPage() {
   const { documentId } = useParams();
   const document = useQuery(api.documents.getById, {
     documentId: documentId as Id<"documents">,
   });
+  const isDeleting = useDocumentStore((state) => state.isDeleting);
+
   const update = useMutation(api.documents.update);
 
   if (document === undefined) return <Loading />;
-  if (document === null) notFound();
+  if (document === null) {
+    return isDeleting ? <Loading /> : <DocumentNotFound />;
+  }
 
   const handleChange = (content: string) => {
     update({ id: documentId as Id<"documents">, content });
