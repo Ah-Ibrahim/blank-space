@@ -18,6 +18,7 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import { ComponentRef, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { DOCUMENT_MESSAGES } from "../(routes)/messages";
 import DocumentsList from "./documents-list";
 import Item from "./item";
 import Navbar from "./navbar";
@@ -127,11 +128,7 @@ function Navigation() {
 
     closeNavOnMobile();
 
-    toast.promise(promise, {
-      loading: "Creating Note",
-      success: "Created Note",
-      error: "Error Occurred!",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.page.create);
   };
 
   return (

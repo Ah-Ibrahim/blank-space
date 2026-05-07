@@ -26,6 +26,7 @@ import {
 import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
 import { toast } from "sonner";
+import { DOCUMENT_MESSAGES } from "../(routes)/messages";
 import DocumentsList from "./documents-list";
 
 interface ItemProps {
@@ -77,22 +78,14 @@ function Item({
       },
     );
 
-    toast.promise(promise, {
-      loading: "Creating Note",
-      success: "Created Note",
-      error: "Error Occurred!",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.page.create);
   };
 
   const handleArchive = () => {
     if (!id) return;
     const promise = archive({ documentId: id });
 
-    toast.promise(promise, {
-      loading: "Archiving Note...",
-      success: "Note Archived!",
-      error: "Error Occurred!",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.page.archive);
   };
 
   const handleClick = () => {
@@ -206,5 +199,4 @@ Item.Skeleton = function ItemSkeleton({ level = 0 }: { level?: number }) {
     </div>
   );
 };
-
 export default Item;

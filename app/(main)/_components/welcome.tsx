@@ -7,6 +7,7 @@ import { useMutation } from "convex/react";
 import { PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { DOCUMENT_MESSAGES } from "../(routes)/messages";
 
 function Welcome() {
   const { user } = useUser();
@@ -18,11 +19,7 @@ function Welcome() {
       router.push(`/documents/${id}`);
     });
 
-    toast.promise(promise, {
-      loading: "Creating Note",
-      success: "Created Note",
-      error: "Error Occurred!",
-    });
+    toast.promise(promise, DOCUMENT_MESSAGES.page.create);
   };
   return (
     <div className="flex flex-col items-center space-y-4">

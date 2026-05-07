@@ -13,13 +13,17 @@ import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { useDocumentStore } from "@/hooks/use-document-state";
 import { useMutation, useQuery } from "convex/react";
 import { Reply, Search, Trash, Trash2, Wind } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
+import { DOCUMENT_MESSAGES } from "../(routes)/messages";
 import Item from "./item";
 
 function TrashItem() {
+  const setIsDeleting = useDocumentStore((state) => state.setIsDeleting);
   const [search, setSearch] = useState<string>("");
 
   const archivedDocuments = useQuery(api.documents.getArchivedDocuments);
@@ -44,20 +48,32 @@ function TrashItem() {
   );
 
   const handleRestore = (documentId: Id<"documents">) => {
-    restoreDocument({ documentId });
+    const promise = restoreDocument({ documentId });
+
+    toast.promise(promise, DOCUMENT_MESSAGES.page.restore);
   };
 
-  const handleDelete = (documentId: Id<"documents">) => {
-    console.log(documentId);
-    console.log(params.documentId);
+  const handleDelete = async (documentId: Id<"documents">) => {
+    setIsDeleting(true);
 
-    if (documentId == params.documentId) {
-      console.log("yes");
-      router.replace("/documents");
+    try {
+      if (documentId == params.documentId) {
+        router.replace("/documents");
+      }
+
+      const promise = Promise.all([
+        deleteDocument({ documentId }),
+        deleteImgFromEdgeStore(documentId),
+      ]);
+
+      toast.promise(promise, DOCUMENT_MESSAGES.trash.delete);
+
+      await promise;
+    } catch (error) {
+      toast.error("Failed to delete document");
+    } finally {
+      setIsDeleting(false);
     }
-
-    deleteImgFromEdgeStore(documentId);
-    deleteDocument({ documentId });
   };
 
   const handleEmptyTrash = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -65,21 +81,32 @@ function TrashItem() {
 
     if (!archivedDocuments?.length) return;
 
-    const imagesToDelete = archivedDocuments
-      .filter((doc) => doc.coverImg !== undefined)
-      .map((doc) => deleteImgFromEdgeStore(doc.coverImg!));
+    setIsDeleting(true);
 
-    await Promise.all(imagesToDelete);
+    try {
+      const isCurrentDocumentDeleted = archivedDocuments.some(
+        (doc) => doc._id == params.documentId,
+      );
 
-    const isCurrentDocumentDeleted = archivedDocuments.some(
-      (doc) => doc._id == params.documentId,
-    );
+      if (isCurrentDocumentDeleted) {
+        router.replace("/documents");
+      }
 
-    if (isCurrentDocumentDeleted) {
-      router.replace("/documents");
+      const imagesToDelete = archivedDocuments
+        .filter((doc) => doc.coverImg !== undefined)
+        .map((doc) => deleteImgFromEdgeStore(doc.coverImg!));
+
+      await Promise.all(imagesToDelete);
+
+      const promise = deleteArchivedDocuments();
+      toast.promise(promise, DOCUMENT_MESSAGES.trash.empty);
+
+      await promise;
+    } catch (error) {
+      toast.error("Failed to empty trash");
+    } finally {
+      setIsDeleting(false);
     }
-
-    await deleteArchivedDocuments();
   };
 
   const handleRedirect = (documentId: Id<"documents">) => {

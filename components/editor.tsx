@@ -7,7 +7,7 @@ import { BlockNoteView } from "@blocknote/shadcn";
 import "@blocknote/shadcn/style.css";
 import { useTheme } from "next-themes";
 
-interface EditorProps {
+export interface EditorProps {
   // This is recommended to way from docs
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialContent?: Block<any, any, any>[];
