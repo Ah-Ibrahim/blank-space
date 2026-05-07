@@ -56,20 +56,24 @@ function TrashItem() {
   const handleDelete = async (documentId: Id<"documents">) => {
     setIsDeleting(true);
 
-    if (documentId == params.documentId) {
-      router.replace("/documents");
+    try {
+      if (documentId == params.documentId) {
+        router.replace("/documents");
+      }
+
+      const promise = Promise.all([
+        deleteDocument({ documentId }),
+        deleteImgFromEdgeStore(documentId),
+      ]);
+
+      toast.promise(promise, DOCUMENT_MESSAGES.trash.delete);
+
+      await promise;
+    } catch (error) {
+      toast.error("Failed to delete document");
+    } finally {
+      setIsDeleting(false);
     }
-
-    const promise = Promise.all([
-      deleteDocument({ documentId }),
-      deleteImgFromEdgeStore(documentId),
-    ]);
-
-    toast.promise(promise, DOCUMENT_MESSAGES.trash.delete);
-
-    await promise;
-
-    setIsDeleting(false);
   };
 
   const handleEmptyTrash = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,26 +83,30 @@ function TrashItem() {
 
     setIsDeleting(true);
 
-    const isCurrentDocumentDeleted = archivedDocuments.some(
-      (doc) => doc._id == params.documentId,
-    );
+    try {
+      const isCurrentDocumentDeleted = archivedDocuments.some(
+        (doc) => doc._id == params.documentId,
+      );
 
-    if (isCurrentDocumentDeleted) {
-      router.replace("/documents");
+      if (isCurrentDocumentDeleted) {
+        router.replace("/documents");
+      }
+
+      const imagesToDelete = archivedDocuments
+        .filter((doc) => doc.coverImg !== undefined)
+        .map((doc) => deleteImgFromEdgeStore(doc.coverImg!));
+
+      await Promise.all(imagesToDelete);
+
+      const promise = deleteArchivedDocuments();
+      toast.promise(promise, DOCUMENT_MESSAGES.trash.empty);
+
+      await promise;
+    } catch (error) {
+      toast.error("Failed to empty trash");
+    } finally {
+      setIsDeleting(false);
     }
-
-    const imagesToDelete = archivedDocuments
-      .filter((doc) => doc.coverImg !== undefined)
-      .map((doc) => deleteImgFromEdgeStore(doc.coverImg!));
-
-    await Promise.all(imagesToDelete);
-
-    const promise = deleteArchivedDocuments();
-    toast.promise(promise, DOCUMENT_MESSAGES.trash.empty);
-
-    await promise;
-
-    setIsDeleting(false);
   };
 
   const handleRedirect = (documentId: Id<"documents">) => {
