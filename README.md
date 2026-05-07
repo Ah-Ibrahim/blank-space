@@ -121,7 +121,7 @@ cd blank-space
 npm install
 ```
 
-3. Add environment variables in `.env.example`
+3. Copy `.env.example` to `.env.local` and add your environment variables
 
 ```bash
 CONVEX_DEPLOYMENT=
